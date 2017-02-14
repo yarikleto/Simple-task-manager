@@ -25,6 +25,14 @@ window.addEventListener('load', () => {
     }
   }
 
+  function liEventListener(e) {
+    let targetLi = e.target
+    if (targetLi.localName === 'li') {
+      tasks[targetLi.number].done = targetLi.classList.toggle('done')
+      localStorage.setItem('tasks', JSON.stringify(tasks))
+    }
+  }
+
   if (tasks.length) textField.placeholder = ''
   const fragment = document.createDocumentFragment('div')
   tasks.forEach( item => {
@@ -41,19 +49,16 @@ window.addEventListener('load', () => {
   window.addEventListener('keypress', buttonClickEvent)
 
   buttonClear.addEventListener('click', () => {
+    taskList.removeEventListener('mousedown', liEventListener)
     taskManager.removeChild(taskList)
     taskList = document.createElement('ol')
+    taskList.addEventListener('mousedown', liEventListener)
     taskList.classList.add('task-list')
     taskManager.insertBefore(taskList, taskManager.firstChild)
     localStorage.clear()
     textField.value = ''
+    textField.placeholder = 'Привет, напиши свое первое задание :)'
   })
 
-  taskList.addEventListener('mousedown', (e) => {
-    let targetLi = e.target
-    if (targetLi.localName === 'li') {
-      tasks[targetLi.number].done = targetLi.classList.toggle('done')
-      localStorage.setItem('tasks', JSON.stringify(tasks))
-    }
-  })
+  taskList.addEventListener('mousedown', liEventListener)
 })
