@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
   'use strict';
-  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   const taskManager = document.querySelector('.task-manager');
   const buttonAdd = document.querySelector('.button-add');
   const buttonClear = document.querySelector('.button-clear');
@@ -56,6 +56,7 @@ window.addEventListener('load', () => {
     taskList.classList.add('task-list');
     taskManager.insertBefore(taskList, taskManager.firstChild);
     localStorage.clear();
+    tasks = [];
     textField.value = '';
     textField.placeholder = 'Привет, напиши свое первое задание :)';
   });
