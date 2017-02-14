@@ -63,6 +63,7 @@ button {
 }
 
 input:hover,
+input:focus,
 button:hover {
   border-color: #1b6700;
 }

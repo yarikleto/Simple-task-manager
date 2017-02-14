@@ -1,30 +1,31 @@
 window.addEventListener('load', () => {
   'use strict'
   const tasks = JSON.parse(localStorage.getItem('tasks')) || []
+  const taskManager = document.querySelector('.task-manager')
   const buttonAdd = document.querySelector('.button-add')
   const buttonClear = document.querySelector('.button-clear')
-  const textFiled = document.querySelector('.text-filed')
-  const taskList = document.querySelector('.task-list')
+  const textField = document.querySelector('.text-filed')
+  let taskList = document.querySelector('.task-list')
   let number = 0
 
   const buttonClickEvent = (e) => {
     if (e.type === 'keypress' && e.keyCode !== 13) return null
-    if (textFiled.value) {
+    if (textField.value) {
       let li = document.createElement('li')
       let liClone = {}
       li.number = number++
-      li.innerText = textFiled.value
-      liClone.text = textFiled.value
+      li.innerText = textField.value
+      liClone.text = textField.value
       liClone.done = false
       taskList.appendChild(li)
       tasks.push(liClone)
       localStorage.setItem('tasks', JSON.stringify(tasks))
-      textFiled.value = ''
-      textFiled.placeholder = ''
+      textField.value = ''
+      textField.placeholder = ''
     }
   }
 
-  if (tasks.length) textFiled.placeholder = ''
+  if (tasks.length) textField.placeholder = ''
   const fragment = document.createDocumentFragment('div')
   tasks.forEach( item => {
     let li  = document.createElement('li')
@@ -40,14 +41,18 @@ window.addEventListener('load', () => {
   window.addEventListener('keypress', buttonClickEvent)
 
   buttonClear.addEventListener('click', () => {
+    taskManager.removeChild(taskList)
+    taskList = document.createElement('ol')
+    taskList.classList.add('task-list')
+    taskManager.insertBefore(taskList, taskManager.firstChild)
     localStorage.clear()
-    location.reload()
+    textField.value = ''
   })
 
   taskList.addEventListener('mousedown', (e) => {
-    let li = e.target
-    if (li.localName === 'li') {
-      tasks[li.number].done = li.classList.toggle('done')
+    let targetLi = e.target
+    if (targetLi.localName === 'li') {
+      tasks[targetLi.number].done = targetLi.classList.toggle('done')
       localStorage.setItem('tasks', JSON.stringify(tasks))
     }
   })
