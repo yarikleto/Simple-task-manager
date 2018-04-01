@@ -1,18 +1,18 @@
 window.addEventListener('load', () => {
   'use strict';
-  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   const taskManager = document.querySelector('.task-manager');
   const buttonAdd = document.querySelector('.button-add');
   const buttonClear = document.querySelector('.button-clear');
   const textField = document.querySelector('.text-filed');
-  let taskList = document.querySelector('.task-list');
+  const taskList = document.querySelector('.task-list');
   let number = 0;
 
   const buttonClickEvent = (e) => {
     if (e.type === 'keypress' && e.keyCode !== 13) return null;
     if (textField.value) {
-      let li = document.createElement('li');
-      let liClone = {};
+      const li = document.createElement('li');
+      const liClone = {};
       li.number = number++;
       li.innerText = textField.value;
       liClone.text = textField.value;
@@ -26,7 +26,7 @@ window.addEventListener('load', () => {
   };
 
   function liEventListener(e) {
-    let targetLi = e.target;
+    const targetLi = e.target;
     if (targetLi.localName === 'li') {
       tasks[targetLi.number].done = targetLi.classList.toggle('done');
       localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -36,7 +36,7 @@ window.addEventListener('load', () => {
   if (tasks.length) textField.placeholder = '';
   const fragment = document.createDocumentFragment('div');
   tasks.forEach( item => {
-    let li  = document.createElement('li');
+    const li  = document.createElement('li');
     li.innerText = item.text;
     li.number = number++;
     if (item.done) li.classList.add('done');
