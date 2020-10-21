@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
   const buttonAdd = document.querySelector('.button-add');
   const buttonClear = document.querySelector('.button-clear');
   const textField = document.querySelector('.text-filed');
-  const taskList = document.querySelector('.task-list');
+  let taskList = document.querySelector('.task-list');
   let number = 0;
 
   const buttonClickEvent = (e) => {
